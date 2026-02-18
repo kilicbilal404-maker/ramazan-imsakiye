@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ramazan 2026</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+    .ustYazi{
+  text-align:center;
+  font-size:28px;
+  font-weight:700;
+  margin-top:20px;
+  margin-bottom:-60px;
+  letter-spacing:1px;
+  background:linear-gradient(90deg,gold,white,gold);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+@media(max-width:600px){
+  .ustYazi{
+    font-size:20px;
+  }
+}
+
+    
+.profilePic{
+  position:fixed;
+  top:20px;
+  right:20px;
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid white;
+  box-shadow:0 0 15px rgba(255,255,255,0.6);
+  z-index:1000;
+}
+
+@media(max-width:600px){
+  .profilePic{
+    width:55px;
+    height:55px;
+    top:15px;
+    right:15px;
+  }
+}
+
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:radial-gradient(circle at top,#1a2a6c,#16222a);
+  color:white;
+}
+
+/* 🌙 Giriş */
+#intro{
+  position:fixed;
+  width:100%;
+  height:100vh;
+  background:linear-gradient(to bottom,#0f2027,#203a43);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+  animation:fadeOut 3s forwards 3s;
+}
+
+@keyframes fadeOut{
+  to{opacity:0;visibility:hidden;}
+}
+
+.moon{
+  width:120px;
+  height:120px;
+  background:radial-gradient(circle,#fff,#ddd);
+  border-radius:50%;
+  box-shadow:0 0 40px white;
+  animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-20px);}
+}
+
+/* 📱 Ana alan */
+.container{
+  max-width:900px;
+  margin:120px auto 40px auto;
+  padding:20px;
+}
+
+.card{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.3);
+}
+
+select{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  margin-bottom:20px;
+  font-size:16px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,td{
+  padding:10px;
+  text-align:center;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+@media(max-width:600px){
+  th,td{font-size:13px;}
+}
+
+.kadir {
+  background: linear-gradient(90deg, gold, orange);
+  color: black;
+  font-weight: bold;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 10px gold; }
+  to { box-shadow: 0 0 25px orange; }
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  background:
+    radial-gradient(2px 2px at 20% 30%, white, transparent),
+    radial-gradient(2px 2px at 70% 80%, white, transparent),
+    radial-gradient(2px 2px at 40% 60%, white, transparent),
+    radial-gradient(2px 2px at 90% 10%, white, transparent),
+    radial-gradient(2px 2px at 10% 90%, white, transparent);
+  animation:starsMove 60s linear infinite;
+  opacity:0.4;
+  z-index:-1;
+}
+
+@keyframes starsMove{
+  from{transform:translateY(0);}
+  to{transform:translateY(-200px);}
+}
+
+.ustAlan{
+  text-align:center;
+  margin-top:20px;
+  margin-bottom:20px;
+}
+
+.ustYazi{
+  font-size:22px;
+  font-weight:600;
+  margin-bottom:8px;
+}
+
+.ustYazi2{
+  font-size:16px;
+  opacity:0.8;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="muzik.mp3" type="audio/mpeg">
+</audio>
+
+
+<div id="intro">
+  <div class="moon"></div>
+  <h1>Ramazan 2026</h1>
+</div>
+
+<div class="ustAlan">
+  <div class="ustYazi">🌙 Sabır, şükür ve dua ayı.</div>
+  <div class="ustYazi2">Yağmur taneleri kadar bereketli bir Ramazan ayı geçirmenizi dilerim.</div>
+</div>
+
+
+
+<img src="profil.jpg" class="profilePic">
+
+<div class="container">
+  <div class="card">
+    <select id="citySelect"></select>
+    <table>
+      <thead>
+        <tr>
+          <th>Tarih</th>
+          <th>İmsak</th>
+          <th>İftar</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+
+const cities=[
+"Adana","Adıyaman","Afyonkarahisar","Ağrı","Amasya","Ankara","Antalya",
+"Artvin","Aydın","Balıkesir","Bilecik","Bingöl","Bitlis","Bolu","Burdur",
+"Bursa","Çanakkale","Çankırı","Çorum","Denizli","Diyarbakır","Edirne",
+"Elazığ","Erzincan","Erzurum","Eskişehir","Gaziantep","Giresun","Gümüşhane",
+"Hakkari","Hatay","Isparta","Mersin","İstanbul","İzmir","Kars",
+"Kastamonu","Kayseri","Kırklareli","Kırşehir","Kocaeli","Konya","Kütahya",
+"Malatya","Manisa","Kahramanmaraş","Mardin","Muğla","Muş","Nevşehir",
+"Niğde","Ordu","Rize","Sakarya","Samsun","Siirt","Sinop","Sivas",
+"Tekirdağ","Tokat","Trabzon","Tunceli","Şanlıurfa","Uşak","Van",
+"Yozgat","Zonguldak","Aksaray","Bayburt","Karaman","Kırıkkale",
+"Batman","Şırnak","Bartın","Ardahan","Iğdır","Yalova","Karabük",
+"Kilis","Osmaniye","Düzce"
+];
+
+const select=document.getElementById("citySelect");
+const tableBody=document.getElementById("tableBody");
+
+cities.forEach(city=>{
+  let option=document.createElement("option");
+  option.value=city;
+  option.textContent=city;
+  select.appendChild(option);
+});
+
+select.addEventListener("change",loadData);
+loadData();
+
+async function loadData(){
+
+  const city=select.value;
+  tableBody.innerHTML="<tr><td colspan='3'>Yükleniyor...</td></tr>";
+
+  try{
+
+    const feb=await fetch(
+      `https://api.aladhan.com/v1/calendarByCity?city=${city}&country=Turkey&method=13&month=2&year=2026`
+    ).then(res=>res.json());
+
+    const mar=await fetch(
+      `https://api.aladhan.com/v1/calendarByCity?city=${city}&country=Turkey&method=13&month=3&year=2026`
+    ).then(res=>res.json());
+
+    const allDays=[...feb.data,...mar.data];
+
+    tableBody.innerHTML="";
+
+    const start=new Date(2026,1,19); // 19 Şubat
+    const end=new Date(2026,2,19);   // 19 Mart
+
+    allDays.forEach(day=>{
+
+      const rawDate=day.date.gregorian.date; // dd-mm-yyyy
+      const parts=rawDate.split("-");
+
+      const dateObj=new Date(
+        parseInt(parts[2]),
+        parseInt(parts[1])-1,
+        parseInt(parts[0])
+      );
+
+      if(dateObj>=start && dateObj<=end){
+
+        const imsak=day.timings.Fajr.split(" ")[0];
+        const iftar=day.timings.Maghrib.split(" ")[0];
+
+        const isKadir = rawDate === "17-03-2026";
+
+
+        tableBody.innerHTML+=`
+          <tr class="${isKadir ? "kadir" : ""}">
+            <td>
+              ${rawDate}
+              ${isKadir ? " ⭐ Kadir Gecesi" : ""}
+            </td>
+            <td>${imsak}</td>
+            <td>${iftar}</td>
+          </tr>
+        `;
+      }
+
+    });
+
+  }catch(err){
+    tableBody.innerHTML="<tr><td colspan='3'>Veri alınamadı</td></tr>";
+  }
+
+}
+
+// Kullanıcı ekrana dokununca müzik başlat
+document.addEventListener("click", function(){
+  const music = document.getElementById("bgMusic");
+  music.play();
+}, { once:true });
+
+
+</script>
+
+
+</body>
+</html>
